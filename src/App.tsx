@@ -131,111 +131,129 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="container mx-auto p-4 max-w-7xl">
+        {/* Header */}
+        <div className="text-center mb-6 print:hidden">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Shortcut Template Generator
+          </h1>
+          <p className="text-sm text-gray-600 mt-1">Create beautiful printable shortcut sheets</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-4">
           {/* Controls Panel */}
-          <div className="lg:col-span-1 space-y-6 print:hidden">
-            <Card>
-              <CardHeader>
-                <CardTitle>Shortcut Template Generator</CardTitle>
+          <div className="space-y-3 print:hidden">
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base font-semibold flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                  Settings
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
+              <CardContent className="space-y-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="title" className="text-xs font-medium text-gray-700">Title</Label>
                   <Input
                     id="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Enter title..."
+                    className="h-9 text-sm"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="app">Software</Label>
-                  <Select value={selectedApp} onValueChange={setSelectedApp}>
-                    <SelectTrigger id="app">
-                      <SelectValue placeholder="Select software" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {shortcutApps.map((app) => (
-                        <SelectItem key={app.id} value={app.id}>
-                          {app.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="app" className="text-xs font-medium text-gray-700">Software</Label>
+                    <Select value={selectedApp} onValueChange={setSelectedApp}>
+                      <SelectTrigger id="app" className="h-9 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {shortcutApps.map((app) => (
+                          <SelectItem key={app.id} value={app.id} className="text-sm">
+                            {app.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="pageSize" className="text-xs font-medium text-gray-700">Size</Label>
+                    <Select
+                      value={pageSize}
+                      onValueChange={(value) => setPageSize(value as "a4" | "a5" | "a6")}
+                    >
+                      <SelectTrigger id="pageSize" className="h-9 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="a4" className="text-sm">A4</SelectItem>
+                        <SelectItem value="a5" className="text-sm">A5</SelectItem>
+                        <SelectItem value="a6" className="text-sm">A6</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="pageSize">Page Size</Label>
-                  <Select
-                    value={pageSize}
-                    onValueChange={(value) =>
-                      setPageSize(value as "a4" | "a5" | "a6")
-                    }
-                  >
-                    <SelectTrigger id="pageSize">
-                      <SelectValue placeholder="Select page size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="a4">A4 (210 × 297 mm)</SelectItem>
-                      <SelectItem value="a5">A5 (148 × 210 mm)</SelectItem>
-                      <SelectItem value="a6">A6 (105 × 148 mm)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="theme">Theme</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="theme" className="text-xs font-medium text-gray-700">Theme</Label>
                   <Select
                     value={theme}
-                    onValueChange={(value) =>
-                      setTheme(value as "minimal" | "modern" | "bold")
-                    }
+                    onValueChange={(value) => setTheme(value as "minimal" | "modern" | "bold")}
                   >
-                    <SelectTrigger id="theme">
-                      <SelectValue placeholder="Select theme" />
+                    <SelectTrigger id="theme" className="h-9 text-sm">
+                      <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="minimal">Minimal</SelectItem>
-                      <SelectItem value="modern">Modern</SelectItem>
-                      <SelectItem value="bold">Bold</SelectItem>
+                      <SelectItem value="minimal" className="text-sm">✨ Minimal</SelectItem>
+                      <SelectItem value="modern" className="text-sm">🎨 Modern</SelectItem>
+                      <SelectItem value="bold" className="text-sm">⚡ Bold</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                <div className="pt-4 space-y-2">
-                  <Button onClick={handlePrint} className="w-full" variant="default">
-                    <Printer className="mr-2 h-4 w-4" />
+                <div className="grid grid-cols-2 gap-2 pt-2">
+                  <Button onClick={handlePrint} size="sm" className="h-9 text-xs">
+                    <Printer className="mr-1.5 h-3.5 w-3.5" />
                     Print
                   </Button>
-                  <Button onClick={handleDownload} className="w-full" variant="outline">
-                    <Download className="mr-2 h-4 w-4" />
-                    Download HTML
+                  <Button onClick={handleDownload} size="sm" variant="outline" className="h-9 text-xs">
+                    <Download className="mr-1.5 h-3.5 w-3.5" />
+                    Download
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Select Shortcuts</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2 mb-4">
-                  <Button onClick={selectAll} variant="outline" size="sm" className="w-full">
-                    Select All
-                  </Button>
-                  <Button onClick={deselectAll} variant="outline" size="sm" className="w-full">
-                    Deselect All
-                  </Button>
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-base font-semibold flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    Select Shortcuts
+                  </CardTitle>
+                  <div className="flex gap-1">
+                    <Button onClick={selectAll} variant="ghost" size="sm" className="h-6 px-2 text-xs">
+                      All
+                    </Button>
+                    <Button onClick={deselectAll} variant="ghost" size="sm" className="h-6 px-2 text-xs">
+                      None
+                    </Button>
+                  </div>
                 </div>
-
+              </CardHeader>
+              <CardContent className="pt-0">
                 <Tabs defaultValue={Object.keys(groupedShortcuts)[0]} className="w-full">
-                  <TabsList className="w-full flex-wrap h-auto">
+                  <TabsList className="w-full h-8 p-0.5 bg-gray-100">
                     {Object.keys(groupedShortcuts).map((category) => (
-                      <TabsTrigger key={category} value={category} className="text-xs">
+                      <TabsTrigger
+                        key={category}
+                        value={category}
+                        className="text-xs h-7 data-[state=active]:bg-white"
+                      >
                         {category}
                       </TabsTrigger>
                     ))}
@@ -245,32 +263,28 @@ function App() {
                     const categorySelected = shortcuts.every((s) =>
                       selectedShortcuts.includes(s.id)
                     );
-                    const categoryPartial =
-                      !categorySelected &&
-                      shortcuts.some((s) => selectedShortcuts.includes(s.id));
 
                     return (
-                      <TabsContent key={category} value={category} className="space-y-2">
-                        <div className="flex items-center space-x-2 p-2 bg-gray-100 rounded">
+                      <TabsContent key={category} value={category} className="mt-3 space-y-1">
+                        <div className="flex items-center gap-2 px-2 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-md border border-blue-100">
                           <Checkbox
                             id={`category-${category}`}
                             checked={categorySelected}
                             onCheckedChange={() => toggleCategory(category)}
-                            className={categoryPartial ? "opacity-50" : ""}
                           />
                           <Label
                             htmlFor={`category-${category}`}
-                            className="font-semibold cursor-pointer"
+                            className="text-xs font-medium cursor-pointer text-blue-900"
                           >
-                            {categorySelected ? "Deselect" : "Select"} All {category}
+                            {categorySelected ? "Deselect" : "Select"} All
                           </Label>
                         </div>
 
-                        <div className="space-y-2 max-h-[400px] overflow-y-auto">
+                        <div className="space-y-0.5 max-h-[calc(100vh-500px)] overflow-y-auto pr-1">
                           {shortcuts.map((shortcut) => (
                             <div
                               key={shortcut.id}
-                              className="flex items-start space-x-2 p-2 hover:bg-gray-50 rounded"
+                              className="flex items-center gap-2 px-2 py-1.5 hover:bg-gray-50 rounded-md transition-colors group"
                             >
                               <Checkbox
                                 id={shortcut.id}
@@ -279,12 +293,12 @@ function App() {
                               />
                               <Label
                                 htmlFor={shortcut.id}
-                                className="text-sm cursor-pointer flex-1"
+                                className="text-xs cursor-pointer flex-1 leading-tight"
                               >
-                                <div className="font-medium">
+                                <div className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
                                   {shortcut.keys.join(" + ")}
                                 </div>
-                                <div className="text-gray-500">
+                                <div className="text-gray-500 text-[11px]">
                                   {shortcut.description}
                                 </div>
                               </Label>
@@ -300,7 +314,7 @@ function App() {
           </div>
 
           {/* Preview Panel */}
-          <div className="lg:col-span-2 flex justify-center print:block">
+          <div className="flex justify-center items-start print:block">
             <ShortcutPreview
               title={title}
               shortcuts={filteredShortcuts}
